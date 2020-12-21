@@ -109,25 +109,27 @@ void Main::on_InjectDLL_clicked()
             qb.exec();
         } */
 
-        void * loc = VirtualAllocEx(hProc, nullptr, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+        void * loc = VirtualAllocEx(hProc, 0, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 
         if (loc)
         {
-            WriteProcessMemory(hProc, loc, dllPath, strlen(dllPath), NULL);
+            WriteProcessMemory(hProc, loc, dllPath, strlen(dllPath) + 1, 0);
         }
 
-        HANDLE hThread = CreateRemoteThread(hProc, nullptr, NULL, (LPTHREAD_START_ROUTINE)LoadLibraryA, loc, NULL, nullptr);
+        HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, loc, 0, 0);
 
         if (hThread)
         {
-            CloseHandle(hProc);
-            VirtualFreeEx(hProc, loc, NULL, MEM_RELEASE);
+            CloseHandle(hThread);
+            //VirtualFreeEx(hProc, loc, NULL, MEM_RELEASE);
             ui->test->setText("Dll injected!");
 
         }
 
     }
 
-
-
+    if (hProc)
+    {
+       CloseHandle(hProc);
+    }
 }
