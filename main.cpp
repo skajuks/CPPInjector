@@ -8,6 +8,8 @@
 #include <QApplication>
 #include <wtsapi32.h>
 #include "qprocessinfo.h"
+#include <QMessageBox>
+
 
 Main::Main(QWidget *parent)
     : QMainWindow(parent)
@@ -87,29 +89,45 @@ void Main::on_InjectDLL_clicked()
         Sleep(30);
     }
 
+    ui->Processtxt->setText(QString::number(procID));
+
     HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, 0, procID);
 
     if (hProc && hProc != INVALID_HANDLE_VALUE)
     {
-        void * loc = VirtualAllocEx(hProc, 0, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+       /* const wchar_t* ntdll = L"ntdll";
+        LPCSTR opnfile = "NtOpenFile";
+        auto ntOpenFile = GetProcAddress(LoadLibraryW(ntdll), opnfile);
+
+        if (ntOpenFile)
+        {
+            char originBytes[5];
+            memcpy(originBytes, (void *)ntOpenFile, 5);
+            WriteProcessMemory(hProc, (void *)ntOpenFile, originBytes, 5, NULL);
+            QMessageBox qb;
+            qb.setText("bypass");
+            qb.exec();
+        } */
+
+        void * loc = VirtualAllocEx(hProc, nullptr, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 
         if (loc)
         {
-            WriteProcessMemory(hProc, loc, dllPath, strlen(dllPath) + 1, 0);
+            WriteProcessMemory(hProc, loc, dllPath, strlen(dllPath), NULL);
         }
 
-        HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, loc, 0, 0);
+        HANDLE hThread = CreateRemoteThread(hProc, nullptr, NULL, (LPTHREAD_START_ROUTINE)LoadLibraryA, loc, NULL, nullptr);
 
         if (hThread)
         {
-            CloseHandle(hThread);
+            CloseHandle(hProc);
+            VirtualFreeEx(hProc, loc, NULL, MEM_RELEASE);
             ui->test->setText("Dll injected!");
+
         }
 
     }
 
-    if (hProc)
-    {
-        CloseHandle(hProc);
-    }
+
+
 }
