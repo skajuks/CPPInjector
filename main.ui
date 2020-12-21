@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>352</height>
+    <width>511</width>
+    <height>258</height>
    </rect>
   </property>
   <property name="palette">
@@ -460,7 +460,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>280</y>
+      <y>190</y>
       <width>241</width>
       <height>61</height>
      </rect>
@@ -907,6 +907,9 @@
       </disabled>
      </palette>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -923,7 +926,7 @@ border-radius: 8px;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>280</y>
+      <y>190</y>
       <width>241</width>
       <height>61</height>
      </rect>
@@ -1436,7 +1439,7 @@ border-radius: 8px;</string>
       <x>10</x>
       <y>10</y>
       <width>241</width>
-      <height>261</height>
+      <height>171</height>
      </rect>
     </property>
    </widget>
@@ -1444,13 +1447,13 @@ border-radius: 8px;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>240</y>
-      <width>111</width>
+      <y>80</y>
+      <width>121</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(12, 40, 5);
+     <string notr="true">background-color: rgb(61, 62, 63);
 color: rgb(255, 255, 255);
 border-radius: 4px;</string>
     </property>
@@ -1472,6 +1475,51 @@ border-radius: 4px;</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="autoSelectCSGO">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>120</y>
+      <width>131</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Auto select csgo.exe</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Filter">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>150</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="searchButton">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>150</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(61, 62, 63);
+color: rgb(255, 255, 255);
+border-radius: 2px;</string>
+    </property>
+    <property name="text">
+     <string>Search process</string>
     </property>
    </widget>
   </widget>

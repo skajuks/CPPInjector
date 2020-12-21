@@ -9,7 +9,10 @@
 #include <wtsapi32.h>
 #include "qprocessinfo.h"
 #include <QMessageBox>
+#include <QDebug>
 
+
+bool autoFindCS;
 
 Main::Main(QWidget *parent)
     : QMainWindow(parent)
@@ -33,7 +36,7 @@ int main(int argc, char** argv) {
 
 void Main::on_findDLL_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select DLL"), "C://", "All (*.dll)");
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select DLL"), "C://Windows//cheat", "All (*.dll)");
     ui->DLLtxt->setText(filename);
 }
 
@@ -64,6 +67,10 @@ void Main::updateProcessList()
     auto processes = QProcessInfo::enumerate();
     for(auto& listElem : processes){
         ui->ProcessList->addItem(listElem.name());
+        if (autoFindCS && listElem.name() == "csgo.exe")
+        {
+            ui->Processtxt->setText(listElem.name());
+        }
     }
 
 }
@@ -104,9 +111,6 @@ void Main::on_InjectDLL_clicked()
             char originBytes[5];
             memcpy(originBytes, (void *)ntOpenFile, 5);
             WriteProcessMemory(hProc, (void *)ntOpenFile, originBytes, 5, NULL);
-            QMessageBox qb;
-            qb.setText("bypass");
-            qb.exec();
         } */
 
         void * loc = VirtualAllocEx(hProc, 0, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
@@ -132,4 +136,29 @@ void Main::on_InjectDLL_clicked()
     {
        CloseHandle(hProc);
     }
+}
+
+void Main::on_autoSelectCSGO_clicked()
+{
+    autoFindCS = true;
+}
+
+void Main::on_searchButton_clicked()
+{
+    QString filter = ui->Filter->text();
+    int listSize = ui->ProcessList->count();
+
+    for (int i = 0; i < listSize; i++)
+    {
+        if (ui->ProcessList->item(i)->text().startsWith(filter))
+        {
+            ui->ProcessList->item(i)->setHidden(false);
+        }
+        else
+        {
+            ui->ProcessList->item(i)->setHidden(true);
+        }
+    }
+
+
 }

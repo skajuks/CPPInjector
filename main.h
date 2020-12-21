@@ -28,6 +28,10 @@ private slots:
 
     void on_InjectDLL_clicked();
 
+    void on_autoSelectCSGO_clicked();
+
+    void on_searchButton_clicked();
+
 private:
     Ui::Main *ui;
 };
