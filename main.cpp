@@ -127,7 +127,6 @@ void Main::on_InjectDLL_clicked()
             CloseHandle(hThread);
             //VirtualFreeEx(hProc, loc, NULL, MEM_RELEASE);
             ui->test->setText("Dll injected!");
-
         }
 
     }
@@ -161,4 +160,10 @@ void Main::on_searchButton_clicked()
     }
 
 
+}
+
+void Main::on_ClearProc_clicked()
+{
+    ui->DLLtxt->setText(NULL);
+    ui->Processtxt->setText(NULL);
 }

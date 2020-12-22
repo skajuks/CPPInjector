@@ -32,6 +32,8 @@ private slots:
 
     void on_searchButton_clicked();
 
+    void on_ClearProc_clicked();
+
 private:
     Ui::Main *ui;
 };
