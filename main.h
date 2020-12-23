@@ -21,6 +21,7 @@ private slots:
     void on_findDLL_clicked();
     void updateProcessList();
     DWORD getProcID(QString filename);
+    bool IsCorrectTargetArchitecture(HANDLE hProc);
 
     void on_ProcessList_itemDoubleClicked(QListWidgetItem *item);
 
@@ -33,6 +34,8 @@ private slots:
     void on_searchButton_clicked();
 
     void on_ClearProc_clicked();
+
+    void on_InjectDLL_ManMap_clicked();
 
 private:
     Ui::Main *ui;
